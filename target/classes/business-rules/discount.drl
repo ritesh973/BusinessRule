@@ -1,0 +1,18 @@
+import com.rits.ebazar.model.Customer;
+import com.rits.ebazar.model.Customer.Category;
+import com.rits.ebazar.model.Order;
+import com.rits.ebazar.model.OrderLine;
+import com.rits.ebazar.model.Discount;
+import com.rits.ebazar.bean.Item;
+rule "High Range Order - 10% Discount"
+    when
+        $o: Order( $lines : orderLines.size >= 2, discount == null )
+        forall( OrderLine( this memberOf $lines,  $item : item)
+                Item(this == $item, category == Item.Category.LOW_RANGE)
+        )
+    then
+
+modify($o){
+setDiscount(new Discount(10.0))
+};
+end

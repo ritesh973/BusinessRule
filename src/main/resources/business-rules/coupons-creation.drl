@@ -1,0 +1,13 @@
+import com.rits.ebazar.model.Customer;
+import com.rits.ebazar.model.Customer.Category;
+import com.rits.ebazar.model.Order;
+import com.rits.ebazar.bean.Coupon;
+import com.rits.ebazar.bean.Coupon.CouponType;
+rule "Create Coupons for Silver Customers"
+    when
+        $o: Order( $customer: customer )
+        $c: Customer(this == $customer, category == Category.SILVER)
+    then
+        insert(new Coupon($c, $o, Coupon.CouponType.POINTS));
+
+end

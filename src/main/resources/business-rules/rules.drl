@@ -1,0 +1,19 @@
+import com.rits.ebazar.bean.Item;
+rule "Classify Item - Low Range"
+    when
+        $i: Item(cost < 200)
+    then
+        $i.setCategory(Item.Category.LOW_RANGE);
+end
+rule "Classify Item - MID_RANGE"
+    when
+        $i: Item(cost < 1000,cost > 200)
+    then
+        $i.setCategory(Item.Category.MID_RANGE);
+end
+rule "Classify Item - High Range"
+    when
+        $i: Item(cost < 5000,cost > 1000)
+    then
+        $i.setCategory(Item.Category.HIGH_RANGE);
+end
